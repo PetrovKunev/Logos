@@ -1,0 +1,102 @@
+[
+  {
+    "id": 10,
+    "title": "Математика - 5 клас",
+    "description": "Целогодишен курс по математика за 5 клас. Подготовка за отличен успех и стабилни знания.",
+    "category": "Математика",
+    "level": "5 клас",
+    "duration": 100,
+    "price": 350.00,
+    "imageUrl": "/images/courses/Math_5.jpg",
+    "isActive": true
+  },
+  {
+    "id": 11,
+    "title": "Математика - 6 клас",
+    "description": "Целогодишен курс по математика за 6 клас. Задълбочено изучаване и упражнения.",
+    "category": "Математика",
+    "level": "6 клас",
+    "duration": 100,
+    "price": 370.00,
+    "imageUrl": "/images/courses/Math_6.jpg",
+    "isActive": true
+  },
+  {
+    "id": 12,
+    "title": "Математика - 7 клас /Подготовка за НВО/",
+    "description": "Интензивна подготовка по математика за НВО след 7 клас. Решаване на тестове и задачи.",
+    "category": "Математика",
+    "level": "7 клас",
+    "duration": 120,
+    "price": 420.00,
+    "imageUrl": "/images/courses/Math_7.jpg",
+    "isActive": true
+  },
+  {
+    "id": 13,
+    "title": "БЕЛ - 5 клас",
+    "description": "Целогодишен курс по български език и литература за 5 клас. Развитие на езикови и литературни умения.",
+    "category": "БЕЛ",
+    "level": "5 клас",
+    "duration": 100,
+    "price": 350.00,
+    "imageUrl": "/images/courses/BEL_5.jpg",
+    "isActive": true
+  },
+  {
+    "id": 14,
+    "title": "БЕЛ - 6 клас",
+    "description": "Целогодишен курс по български език и литература за 6 клас. Подготовка за отличен успех.",
+    "category": "БЕЛ",
+    "level": "6 клас",
+    "duration": 100,
+    "price": 370.00,
+    "imageUrl": "/images/courses/BEL_6.jpg",
+    "isActive": true
+  },
+  {
+    "id": 15,
+    "title": "БЕЛ - 7 клас /Подготовка за НВО/",
+    "description": "Интензивна подготовка по БЕЛ за НВО след 7 клас. Анализ на текстове и упражнения.",
+    "category": "БЕЛ",
+    "level": "7 клас",
+    "duration": 120,
+    "price": 420.00,
+    "imageUrl": "/images/courses/BEL_7.jpg",
+    "isActive": true
+  },
+  {
+    "id": 16,
+    "title": "Програмиране - 5 клас",
+    "description": "Първи стъпки в програмирането със Scratch. Основи на блоковото програмиране и алгоритмично мислене. Курсът включва създаване на интерактивни истории и игри, работа със спрайтове, звуци и анимации.",
+    "category": "Програмиране",
+    "level": "5 клас",
+    "duration": 48,
+    "price": 350.00,
+    "imageUrl": "/images/courses/Code_5.jpg",
+    "isActive": true
+  },
+  {
+    "id": 17,
+    "title": "Програмиране - 6 клас",
+    "description": "От блокове към код - Python за начинаещи. Преход от Scratch към Python с основни концепции на програмирането. Курсът включва Python синтаксис, променливи и типове данни, условия и цикли, Turtle Graphics.",
+    "category": "Програмиране",
+    "level": "6 клас",
+    "duration": 48,
+    "price": 370.00,
+    "imageUrl": "/images/courses/Code_6.jpg",
+    "isActive": true
+  },
+  {
+    "id": 18,
+    "title": "Програмиране - 7 клас",
+    "description": "Програмиране с Python и C# - следващото ниво. Задълбочено изучаване на Python, въведение в C# и обектно-ориентирано програмиране. Курсът включва разширени Python концепции, C# език, Visual Studio среда, ООП принципи.",
+    "category": "Програмиране",
+    "level": "7 клас",
+    "duration": 48,
+    "price": 420.00,
+    "imageUrl": "/images/courses/Code_7.jpg",
+    "isActive": true
+  }
+]
+
