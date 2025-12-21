@@ -4,7 +4,7 @@ import { useState } from 'react'
 import CourseCard from '@/components/CourseCard'
 import courses from '@/data/courses.json'
 
-const categories = ['Всички', 'Математика', 'БЕЛ', 'Програмиране']
+const categories = ['Всички', ...Array.from(new Set(courses.map((c) => c.category)))]
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState('Всички')

@@ -60,7 +60,18 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Академия Логос. Всички права запазени.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Академия Логос. Всички права запазени. Изработено от{' '}
+            <a
+              href="https://kunev.dev"
+              target="_blank"
+              rel="noreferrer"
+              className="text-gray-300 hover:text-white underline underline-offset-4 transition-colors"
+            >
+              kunev.dev
+            </a>
+            .
+          </p>
         </div>
       </div>
     </footer>

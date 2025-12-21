@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Ценоразпис - Академия Логос',
+  title: 'Ценообразуване - Академия Логос',
   description: 'Цени на курсовете в Академия Логос. Групово и индивидуално обучение по математика, БЕЛ и програмиране.',
 }
 
@@ -10,7 +10,7 @@ export default function PricingPage() {
   return (
     <section className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold mb-6 text-center text-gray-900">Ценоразпис</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center text-gray-900">Ценообразуване</h1>
         
         {/* Pricing Table */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
