@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import type { Metadata } from 'next'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,20 +11,33 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
     
-    // For now, we'll just simulate a form submission
-    // In production, you would send this to an API route or use a service like Formspree
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      const data = (await res.json().catch(() => null)) as null | { ok?: boolean; error?: string }
+      if (!res.ok || !data?.ok) {
+        setSubmitStatus('error')
+        setErrorMessage(data?.error || 'Възникна грешка. Моля, опитайте отново.')
+        return
+      }
+
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch {
       setSubmitStatus('error')
+      setErrorMessage('Възникна грешка. Моля, опитайте отново.')
     } finally {
       setIsSubmitting(false)
     }
@@ -84,7 +96,7 @@ export default function ContactPage() {
             
             {submitStatus === 'error' && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                Възникна грешка. Моля, опитайте отново.
+                {errorMessage || 'Възникна грешка. Моля, опитайте отново.'}
               </div>
             )}
             
