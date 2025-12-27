@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,16 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
+  
+  // Anti-spam: Track form render timestamp
+  const [formTimestamp, setFormTimestamp] = useState<number>(0)
+  // Anti-spam: Honeypot value (should always be empty)
+  const [honeypot, setHoneypot] = useState('')
+  
+  // Set timestamp when form mounts
+  useEffect(() => {
+    setFormTimestamp(Date.now())
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -23,10 +33,21 @@ export default function ContactPage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _hp: honeypot,     // Honeypot field
+          _ts: formTimestamp // Timestamp when form was rendered
+        }),
       })
 
       const data = (await res.json().catch(() => null)) as null | { ok?: boolean; error?: string }
+      
+      if (res.status === 429) {
+        setSubmitStatus('error')
+        setErrorMessage(data?.error || 'Твърде много заявки. Моля, изчакайте малко.')
+        return
+      }
+      
       if (!res.ok || !data?.ok) {
         setSubmitStatus('error')
         setErrorMessage(data?.error || 'Възникна грешка. Моля, опитайте отново.')
@@ -35,6 +56,8 @@ export default function ContactPage() {
 
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
+      // Reset timestamp for next submission
+      setFormTimestamp(Date.now())
     } catch {
       setSubmitStatus('error')
       setErrorMessage('Възникна грешка. Моля, опитайте отново.')
@@ -101,6 +124,29 @@ export default function ContactPage() {
             )}
             
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot field - hidden from real users, bots will fill it */}
+              <div 
+                aria-hidden="true" 
+                style={{ 
+                  position: 'absolute', 
+                  left: '-9999px', 
+                  top: '-9999px',
+                  opacity: 0,
+                  pointerEvents: 'none'
+                }}
+              >
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+              
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                   Име *
@@ -112,6 +158,7 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  maxLength={100}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 />
               </div>
@@ -127,6 +174,7 @@ export default function ContactPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  maxLength={254}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 />
               </div>
@@ -161,8 +209,12 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   rows={5}
+                  maxLength={5000}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.message.length}/5000 символа
+                </p>
               </div>
               
               <button
@@ -179,4 +231,3 @@ export default function ContactPage() {
     </div>
   )
 }
-
