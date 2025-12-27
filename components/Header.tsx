@@ -2,10 +2,12 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const navLinks = [
     { href: '/', label: 'Начало' },
@@ -15,6 +17,44 @@ export default function Header() {
     { href: '/about', label: 'За нас' },
     { href: '/contact', label: 'Контакт' },
   ]
+
+  useEffect(() => {
+    if (!isMenuOpen) return
+    const menu = menuRef.current
+    if (!menu) return
+
+    const focusable = menu.querySelectorAll<HTMLElement>(
+      'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    )
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+
+    first?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false)
+        menuButtonRef.current?.focus()
+        return
+      }
+
+      if (event.key !== 'Tab' || !first || !last) return
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+        return
+      }
+
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isMenuOpen])
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -51,6 +91,10 @@ export default function Header() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-primary-600 focus:outline-none"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav"
+              aria-label={isMenuOpen ? 'Затвори менюто' : 'Отвори менюто'}
+              ref={menuButtonRef}
             >
               <svg
                 className="h-6 w-6"
@@ -80,7 +124,11 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div
+            className="md:hidden py-4 border-t"
+            id="mobile-nav"
+            ref={menuRef}
+          >
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link

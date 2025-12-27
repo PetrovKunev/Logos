@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
 
 export const runtime = 'nodejs'
 
@@ -12,23 +14,39 @@ type ContactPayload = {
   _ts?: number      // Timestamp when form was rendered
 }
 
-// Simple in-memory rate limiting (IP -> timestamps)
-const rateLimitMap = new Map<string, number[]>()
-const RATE_LIMIT_WINDOW_MS = 60 * 1000  // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 3       // Max 3 requests per minute per IP
+const RATE_LIMIT_WINDOW_MS = 60 * 1000 // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 3 // Max 3 requests per minute per IP
 
-// Cleanup old entries every 5 minutes
-setInterval(() => {
-  const now = Date.now()
-  rateLimitMap.forEach((timestamps, ip) => {
-    const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS)
-    if (valid.length === 0) {
-      rateLimitMap.delete(ip)
-    } else {
-      rateLimitMap.set(ip, valid)
-    }
-  })
-}, 5 * 60 * 1000)
+const upstashUrl = process.env.UPSTASH_REDIS_REST_URL
+const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN
+
+const ratelimit = upstashUrl && upstashToken
+  ? new Ratelimit({
+      redis: new Redis({
+        url: upstashUrl,
+        token: upstashToken,
+      }),
+      limiter: Ratelimit.slidingWindow(RATE_LIMIT_MAX_REQUESTS, `${RATE_LIMIT_WINDOW_MS} ms`),
+      analytics: true,
+      prefix: 'contact',
+    })
+  : null
+
+// Fallback limiter for local/dev when Upstash isn't configured.
+const inMemoryRateLimitMap = new Map<string, number[]>()
+if (!ratelimit) {
+  setInterval(() => {
+    const now = Date.now()
+    inMemoryRateLimitMap.forEach((timestamps, ip) => {
+      const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS)
+      if (valid.length === 0) {
+        inMemoryRateLimitMap.delete(ip)
+      } else {
+        inMemoryRateLimitMap.set(ip, valid)
+      }
+    })
+  }, 5 * 60 * 1000)
+}
 
 function getClientIP(req: Request): string {
   // Check common headers for real IP (behind proxies/CDN)
@@ -43,21 +61,26 @@ function getClientIP(req: Request): string {
   return 'unknown'
 }
 
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const timestamps = rateLimitMap.get(ip) || []
-  
-  // Filter to only recent timestamps
-  const recentTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS)
-  
-  if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
-    return false // Rate limited
+async function checkRateLimit(ip: string): Promise<{ ok: boolean; retryAfterSeconds?: number }> {
+  if (ratelimit) {
+    const { success, reset } = await ratelimit.limit(ip)
+    if (success) return { ok: true }
+
+    const retryAfterSeconds = Math.max(1, Math.ceil((reset - Date.now()) / 1000))
+    return { ok: false, retryAfterSeconds }
   }
-  
-  // Add current request timestamp
+
+  const now = Date.now()
+  const timestamps = inMemoryRateLimitMap.get(ip) || []
+  const recentTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS)
+
+  if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+    return { ok: false, retryAfterSeconds: Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) }
+  }
+
   recentTimestamps.push(now)
-  rateLimitMap.set(ip, recentTimestamps)
-  return true
+  inMemoryRateLimitMap.set(ip, recentTimestamps)
+  return { ok: true }
 }
 
 function getRequiredEnv(name: string): string {
@@ -189,11 +212,17 @@ export async function POST(req: Request) {
   try {
     // Rate limiting check
     const clientIP = getClientIP(req)
-    if (!checkRateLimit(clientIP)) {
+    const rateLimit = await checkRateLimit(clientIP)
+    if (!rateLimit.ok) {
       console.log(`[contact] Rate limited: ${clientIP}`)
       return Response.json(
         { ok: false, error: 'Твърде много заявки. Моля, изчакайте минута.' },
-        { status: 429 }
+        {
+          status: 429,
+          headers: rateLimit.retryAfterSeconds
+            ? { 'Retry-After': String(rateLimit.retryAfterSeconds) }
+            : undefined,
+        },
       )
     }
     
