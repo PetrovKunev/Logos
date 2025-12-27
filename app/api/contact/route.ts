@@ -20,14 +20,14 @@ const RATE_LIMIT_MAX_REQUESTS = 3       // Max 3 requests per minute per IP
 // Cleanup old entries every 5 minutes
 setInterval(() => {
   const now = Date.now()
-  for (const [ip, timestamps] of rateLimitMap.entries()) {
+  rateLimitMap.forEach((timestamps, ip) => {
     const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS)
     if (valid.length === 0) {
       rateLimitMap.delete(ip)
     } else {
       rateLimitMap.set(ip, valid)
     }
-  }
+  })
 }, 5 * 60 * 1000)
 
 function getClientIP(req: Request): string {
