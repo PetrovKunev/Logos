@@ -35,6 +35,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Practice vs Theory Highlight */}
+      <section className="py-12 bg-amber-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <span className="text-3xl">🎯</span>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                <span className="text-red-500">70% практика</span>
+                <span className="text-gray-700">, </span>
+                <span className="text-primary-600">30% теория</span>
+              </h2>
+            </div>
+            <p className="text-gray-600 text-lg">
+              Това е нашето съотношение за максимална ефективност на обучението
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
