@@ -29,18 +29,18 @@ export default function PricingPage() {
               <tbody className="divide-y divide-gray-200">
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">Математика</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">15€/час</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">20€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">25€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">30€/час</td>
                 </tr>
                 <tr className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">Български език и литература</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">15€/час</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">20€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">25€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">30€/час</td>
                 </tr>
                 <tr className="hover:bg-gray-50 transition-colors bg-primary-50">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">Програмиране</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">20€/час</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-700">25€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">30€/час</td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-700">35€/час</td>
                 </tr>
               </tbody>
             </table>
