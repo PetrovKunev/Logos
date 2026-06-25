@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react'
 
+// Google геокодира този адрес точно до вход Б на блок 132 в ж.к. Дружба 1.
+const MAP_ADDRESS = 'ж.к. Дружба 1, ул. „5021-ва“ 132, 1592 София'
+const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${encodeURIComponent(MAP_ADDRESS)}&z=17&output=embed`
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -84,6 +88,18 @@ export default function ContactPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Информация за контакт</h2>
             
             <div className="space-y-6">
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-primary-600 mt-1 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Адрес</h3>
+                  <p className="text-gray-600">Дружба 1; бл. 132; вх. Б, ет. 1</p>
+                  <p className="text-gray-600">1592 София</p>
+                </div>
+              </div>
+
               <div className="flex items-start">
                 <svg className="w-6 h-6 text-primary-600 mt-1 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -235,6 +251,21 @@ export default function ContactPage() {
                 {isSubmitting ? 'Изпращане...' : 'Изпрати съобщение'}
               </button>
             </form>
+          </div>
+        </div>
+
+        {/* Map */}
+        <div className="mt-8 bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Къде се намираме</h2>
+          <div className="aspect-video w-full overflow-hidden rounded-lg">
+            <iframe
+              src={MAP_EMBED_SRC}
+              title="Карта - Академия Логос"
+              className="h-full w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
         </div>
       </div>
