@@ -106,7 +106,7 @@ export default function ContactPage() {
                 </svg>
                 <div>
                   <h3 className="font-semibold text-gray-900">Имейл</h3>
-                  <p className="text-gray-600">office@academylogos.com</p>
+                  <p className="text-gray-600">yavor@kunev.dev</p>
                 </div>
               </div>
               
