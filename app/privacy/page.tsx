@@ -57,7 +57,7 @@ export default function PrivacyPage() {
           <h2>Контакт</h2>
           <p>
             Ако имате въпроси относно тази политика или обработването на вашите лични данни, 
-            моля свържете се с нас на info@academylogos.com.
+            моля свържете се с нас на yavor@kunev.dev.
           </p>
 
           <p className="text-gray-500 text-sm mt-8">
