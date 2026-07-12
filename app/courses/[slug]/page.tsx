@@ -165,6 +165,80 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">Описание</h3>
                 <p className="text-gray-700 mb-6">{course.details.description}</p>
 
+                {course.category === 'Програмиране' && (
+                  <div className={`${theme.accentBgLight} border ${theme.accentBorderLight} rounded-lg p-6 mb-8`}>
+                    <h3 className={`text-xl font-semibold ${theme.accentTextDark} mb-3`}>
+                      Защо програмиране при нас?
+                    </h3>
+                    <p className={`${theme.accentTextLight} mb-3`}>
+                      Обучението води <strong>действащ учител по C# в гимназия</strong> и{' '}
+                      <strong>докторант в БАН</strong> в областта на изкуствения интелект в
+                      образованието. Учениците предават задачите си в <strong>CodeGrade</strong> —
+                      реална система за автоматична проверка на код, каквато използват
+                      технологичните гимназии.
+                    </p>
+                    <p className={`${theme.accentTextLight} mb-4`}>
+                      Курсът е част от тригодишната ни пътека, която подготвя за профилираните
+                      гимназии:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      {[
+                        { grade: '5 клас', label: 'Scratch' },
+                        { grade: '6 клас', label: 'Python' },
+                        { grade: '7 клас', label: 'C#' },
+                      ].map((step) => (
+                        <div
+                          key={step.grade}
+                          className={`flex-1 rounded-lg px-4 py-3 text-center ${
+                            course.grade === step.grade
+                              ? `${theme.accentBg} text-white`
+                              : 'bg-white text-gray-700 border border-gray-200'
+                          }`}
+                        >
+                          <p className="font-semibold">{step.label}</p>
+                          <p className="text-sm opacity-80">{step.grade}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {course.category === 'Български език и литература' && (
+                  <div className={`${theme.accentBgLight} border ${theme.accentBorderLight} rounded-lg p-6 mb-8`}>
+                    <h3 className={`text-xl font-semibold ${theme.accentTextDark} mb-3`}>
+                      Преразказът — тренираме го от 5. клас
+                    </h3>
+                    <p className={`${theme.accentTextLight} mb-4`}>
+                      Преразказът на неизучавана творба е самостоятелна 90-минутна част от НВО и
+                      най-тежкият компонент на изпита. Затова не го оставяме за последната година, а
+                      го изграждаме стъпка по стъпка:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                      {[
+                        { grade: '5 клас', label: 'Подробен преразказ' },
+                        { grade: '6 клас', label: 'Двата НВО варианта' },
+                        { grade: '7 клас', label: 'Изпитен формат' },
+                      ].map((step) => (
+                        <div
+                          key={step.grade}
+                          className={`flex-1 rounded-lg px-4 py-3 text-center ${
+                            course.grade === step.grade
+                              ? `${theme.accentBg} text-white`
+                              : 'bg-white text-gray-700 border border-gray-200'
+                          }`}
+                        >
+                          <p className="font-semibold">{step.label}</p>
+                          <p className="text-sm opacity-80">{step.grade}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className={`${theme.accentTextLight}`}>
+                      Дете, което мине трите години при нас, стига до НВО с три години тренинг върху
+                      най-тежката част на изпита.
+                    </p>
+                  </div>
+                )}
+
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">Какво ще научат учениците?</h3>
                 <div className="space-y-4">
                   {course.details.learn.map((item) => (

@@ -2,8 +2,12 @@ import Link from 'next/link'
 import CourseCard from '@/components/CourseCard'
 import courses from '@/data/courses.json'
 
+const categoryOrder = ['Програмиране', 'Математика', 'Български език и литература']
+
 export default function Home() {
-  const featuredCourses = courses.filter(c => c.isActive).slice(0, 6)
+  const featuredCourses = courses
+    .filter(c => c.isActive)
+    .sort((a, b) => categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category))
 
   return (
     <>
@@ -31,6 +35,71 @@ export default function Home() {
                 Свържи се с нас
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programming Flagship */}
+      <section className="bg-gray-900 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="inline-block bg-purple-500/20 text-purple-300 border border-purple-400/40 px-4 py-1 rounded-full text-sm font-medium mb-4">
+              Нашият флагман
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Защо програмиране при нас?</h2>
+            <p className="text-gray-300 max-w-3xl mx-auto">
+              Тригодишна пътека от първите блокчета в Scratch до истински код на C# — с преподавател,
+              какъвто кварталните центрове не могат да предложат.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="text-3xl mb-3">🎓</div>
+              <h3 className="text-xl font-semibold mb-2">Преподавател от гимназиалната класа</h3>
+              <p className="text-gray-300">
+                Обучението води действащ учител по C# в гимназия и докторант в БАН в областта на
+                изкуствения интелект в образованието.
+              </p>
+            </div>
+            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="text-3xl mb-3">🚀</div>
+              <h3 className="text-xl font-semibold mb-2">Пътека Scratch → Python → C#</h3>
+              <p className="text-gray-300">
+                От блоково програмиране в 5. клас през Python в 6. до C# и ООП в 7. клас — прогресия,
+                която подготвя за профилираните гимназии.
+              </p>
+            </div>
+            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="text-3xl mb-3">⚙️</div>
+              <h3 className="text-xl font-semibold mb-2">Реални инструменти</h3>
+              <p className="text-gray-300">
+                Учениците предават задачите си в CodeGrade — система за автоматична проверка на код,
+                каквато използват технологичните гимназии. Финалният проект се представя пред
+                родителите.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+            <Link
+              href="/courses/programirane-5-klas"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
+            >
+              Scratch — 5. клас
+            </Link>
+            <Link
+              href="/courses/programirane-6-klas"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
+            >
+              Python — 6. клас
+            </Link>
+            <Link
+              href="/courses/programirane-7-klas"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
+            >
+              C# — 7. клас
+            </Link>
           </div>
         </div>
       </section>
@@ -104,7 +173,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Нашите курсове</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Предлагаме курсове по математика, български език и литература и програмиране за ученици от 5 до 7 клас.
+              Предлагаме курсове по програмиране, математика и български език и литература за ученици от 5 до 7 клас.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
