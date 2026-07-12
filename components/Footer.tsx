@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PHONE_DISPLAY, PHONE_HREF, VIBER_HREF, ADDRESS_LINES } from '@/lib/contact'
 
 export default function Footer() {
   return (
@@ -45,6 +46,19 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Контакт</h4>
             <ul className="space-y-2 text-gray-400">
+              <li>
+                <a href={PHONE_HREF} className="hover:text-white transition-colors">
+                  📞 {PHONE_DISPLAY}
+                </a>
+              </li>
+              <li>
+                <a href={VIBER_HREF} className="hover:text-white transition-colors">
+                  Viber: {PHONE_DISPLAY}
+                </a>
+              </li>
+              {ADDRESS_LINES.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
               <li>
                 <Link href="/contact" className="hover:text-white transition-colors">
                   Свържете се с нас

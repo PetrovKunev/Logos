@@ -32,7 +32,7 @@ export default function Home() {
                 href="/contact"
                 className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-700 px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
               >
-                Свържи се с нас
+                Запишете безплатен пробен час
               </Link>
             </div>
           </div>
@@ -74,9 +74,9 @@ export default function Home() {
               <div className="text-3xl mb-3">⚙️</div>
               <h3 className="text-xl font-semibold mb-2">Реални инструменти</h3>
               <p className="text-gray-300">
-                Учениците предават задачите си в CodeGrade — система за автоматична проверка на код,
-                каквато използват технологичните гимназии. Финалният проект се представя пред
-                родителите.
+                От новата учебна година учениците предават задачите си в CodeGrade — система за
+                автоматична проверка на код, разработвана от самия преподавател. Финалният проект
+                се представя пред родителите.
               </p>
             </div>
           </div>
@@ -197,13 +197,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Готови ли сте да започнете?</h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Свържете се с нас за безплатна консултация и намерете най-подходящия курс за вашето дете.
+            Запишете безплатен пробен час — детето сяда в групата, преди да платите каквото и да е.
           </p>
           <Link
             href="/contact"
             className="inline-block bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
           >
-            Свържете се с нас
+            Запишете безплатен пробен час
           </Link>
         </div>
       </section>

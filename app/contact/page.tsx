@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { PHONE_DISPLAY, PHONE_HREF, VIBER_HREF, CONTACT_EMAIL } from '@/lib/contact'
 
 // Google геокодира този адрес точно до вход Б на блок 132 в ж.к. Дружба 1.
 const MAP_ADDRESS = 'ж.к. Дружба 1, ул. „5021-ва“ 132, 1592 София'
 const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${encodeURIComponent(MAP_ADDRESS)}&z=17&output=embed`
 
 export default function ContactPage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,7 +17,7 @@ export default function ContactPage() {
     message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
   
   // Anti-spam: Track form render timestamp
@@ -58,10 +61,9 @@ export default function ContactPage() {
         return
       }
 
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      // Reset timestamp for next submission
-      setFormTimestamp(Date.now())
+      // Отделна thank-you страница — нужна е за conversion tracking на рекламите
+      router.push('/thanks')
+      return
     } catch {
       setSubmitStatus('error')
       setErrorMessage('Възникна грешка. Моля, опитайте отново.')
@@ -86,7 +88,22 @@ export default function ContactPage() {
           {/* Contact Info */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Информация за контакт</h2>
-            
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <a
+                href={PHONE_HREF}
+                className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-lg font-semibold text-center transition-colors"
+              >
+                📞 Обадете се
+              </a>
+              <a
+                href={VIBER_HREF}
+                className="flex-1 bg-[#7360F2] hover:bg-[#5f4dd0] text-white px-5 py-3 rounded-lg font-semibold text-center transition-colors"
+              >
+                Пишете във Viber
+              </a>
+            </div>
+
             <div className="space-y-6">
               <div className="flex items-start">
                 <svg className="w-6 h-6 text-primary-600 mt-1 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +123,11 @@ export default function ContactPage() {
                 </svg>
                 <div>
                   <h3 className="font-semibold text-gray-900">Имейл</h3>
-                  <p className="text-gray-600">yavor@kunev.dev</p>
+                  <p className="text-gray-600">
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary-700 transition-colors">
+                      {CONTACT_EMAIL}
+                    </a>
+                  </p>
                 </div>
               </div>
               
@@ -115,8 +136,12 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Телефон</h3>
-                  <p className="text-gray-600">0897942126</p>
+                  <h3 className="font-semibold text-gray-900">Телефон и Viber</h3>
+                  <p className="text-gray-600">
+                    <a href={PHONE_HREF} className="hover:text-primary-700 transition-colors">
+                      {PHONE_DISPLAY}
+                    </a>
+                  </p>
                 </div>
               </div>
               
@@ -136,12 +161,6 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Изпратете съобщение</h2>
-            
-            {submitStatus === 'success' && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                Благодарим ви! Съобщението е изпратено успешно.
-              </div>
-            )}
             
             {submitStatus === 'error' && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
