@@ -3,7 +3,7 @@ import blogposts from '@/data/blogposts.json'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Блог - Академия Логос',
+  title: 'Блог — статии за НВО и образованието',
   description: 'Статии и съвети за образование, подготовка за НВО и развитие на умения.',
 }
 

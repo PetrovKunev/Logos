@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'За нас - Академия Логос',
-  description: 'Научете повече за Академия Логос - нашата мисия, екип и подход към образованието.',
+  title: 'За нас',
+  description:
+    'Академия Логос — малки групи от 3–4 ученици, 70% практика и редовна обратна връзка към родителя. Нашата мисия и подход към образованието.',
 }
 
 export default function AboutPage() {

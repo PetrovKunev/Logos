@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import courses from '@/data/courses.json'
+import { SITE_URL, SITE_NAME } from '@/lib/site'
 
 type Course = {
   id: number
@@ -42,16 +44,37 @@ export function generateStaticParams() {
     .map((c) => ({ slug: c.slug }))
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const course = (courses as Course[]).find((c) => c.slug === params.slug && c.isActive)
 
   if (!course) {
     return { title: 'Курсът не е намерен' }
   }
 
+  const gradeNum = course.grade.replace(' клас', '')
+  const subject =
+    course.category === 'Математика'
+      ? 'математика'
+      : course.category === 'Програмиране'
+        ? 'програмиране'
+        : 'БЕЛ'
+  const focus =
+    course.category === 'Програмиране'
+      ? ({ '5': 'Scratch', '6': 'Python', '7': 'Python и C#' }[gradeNum] ?? 'Scratch')
+      : gradeNum === '7'
+        ? 'подготовка за НВО'
+        : 'групи от 3–4 ученици'
+  const title = `Курс по ${subject} за ${gradeNum}. клас — ${focus}`
+  const description = `${course.details.heroSubtitle}. Групи от 3–4 ученици, ${course.pricing.modulePriceEur} € на модул (на ученик), първият час е безплатен.`
+
   return {
-    title: `${course.title} | Академия Логос`,
-    description: course.details?.description ?? course.summary,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [{ url: course.imageUrl }],
+    },
   }
 }
 
@@ -103,8 +126,34 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
             accentHoverLight: 'hover:bg-purple-50',
           }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: course.title,
+    description: course.details.description,
+    url: `${SITE_URL}/courses/${course.slug}`,
+    image: `${SITE_URL}${course.imageUrl}`,
+    provider: {
+      '@type': 'EducationalOrganization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: course.pricing.modulePriceEur,
+      priceCurrency: 'EUR',
+      description: `Цена за модул от ${course.pricing.moduleHours} учебни часа, на ученик`,
+    },
+    educationalLevel: course.grade,
+    timeRequired: `PT${course.durationHours}H`,
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       {/* Back link */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <Link href="/courses" className="text-primary-700 hover:text-primary-800 font-medium">

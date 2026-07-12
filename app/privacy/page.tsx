@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Политика за поверителност - Академия Логос',
+  title: 'Политика за поверителност',
   description: 'Политика за поверителност на Академия Логос.',
 }
 

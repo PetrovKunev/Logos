@@ -23,10 +23,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
+  // Някои metaTitle стойности вече съдържат „| Академия Логос“ — чистим
+  // суфикса, защото title template-ът в root layout го добавя отново.
+  const title = (post.metaTitle || post.title).replace(/\s*[|–—-]\s*Академия Логос\s*$/, '')
+  const description = post.metaDescription || post.summary
+
   return {
-    title: post.metaTitle || post.title,
-    description: post.metaDescription || post.summary,
+    title,
+    description,
     keywords: post.metaKeywords,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
   }
 }
 
