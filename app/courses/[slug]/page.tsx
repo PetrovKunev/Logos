@@ -13,6 +13,20 @@ type Course = {
   durationHours: number
   imageUrl: string
   isActive: boolean
+  pricing: {
+    groupHourEur: number
+    individualHourEur: number
+    moduleHours: number
+    modulePriceEur: number
+    monthlyPriceEur: number
+    modulesCount: number
+  }
+  modules: Array<{
+    title: string
+    period: string
+    topics: string[]
+    milestone: string
+  }>
   details: {
     heroSubtitle: string
     includes: string[]
@@ -104,6 +118,15 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">{course.title}</h1>
             <p className="text-xl max-w-3xl mx-auto opacity-90">{course.details.heroSubtitle}</p>
+            <p className="mt-6 text-lg font-medium">
+              {course.pricing.modulePriceEur} € на модул · цената е на ученик · група от 3–4 деца
+            </p>
+            <Link
+              href="/contact"
+              className="inline-block mt-4 bg-white text-gray-900 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
+            >
+              Запишете безплатен пробен час
+            </Link>
           </div>
         </div>
       </section>
@@ -152,6 +175,39 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
                   ))}
                 </div>
 
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4 mt-8">Програма по модули</h3>
+                <p className="text-gray-700 mb-6">
+                  Учебната година (октомври – юни) е разделена на 4 модула по{' '}
+                  {course.pricing.moduleHours} учебни часа. Записвате модул по модул — без ангажимент
+                  за цяла година. Последователността на темите се синхронизира с учебника, по който
+                  работи училището на детето.
+                </p>
+                <div className="space-y-4">
+                  {course.modules.map((mod, index) => (
+                    <div key={mod.title} className={`border ${theme.accentBorderLight} rounded-lg p-5`}>
+                      <div className="flex items-center justify-between flex-wrap gap-2 mb-2">
+                        <span
+                          className={`${theme.accentBgLight} ${theme.accentTextDark} px-3 py-1 rounded-full text-sm font-semibold`}
+                        >
+                          Модул {index + 1} · „{mod.title}“
+                        </span>
+                        <span className="text-sm text-gray-500">{mod.period}</span>
+                      </div>
+                      <ul className="text-gray-700 space-y-1 mb-3">
+                        {mod.topics.map((topic) => (
+                          <li key={topic} className="flex items-start">
+                            <span className={`${theme.accentText} mr-2`}>•</span>
+                            {topic}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className={`text-sm font-medium ${theme.accentText}`}>
+                        Завършва с: {mod.milestone}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4 mt-8">Продължителност</h3>
                 <p className="text-gray-700 mb-6">{course.details.durationText}</p>
               </div>
@@ -160,6 +216,24 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-gray-50 rounded-lg p-6 sticky top-8">
+                <div className="pb-6 mb-6 border-b border-gray-200">
+                  <p className="flex items-baseline gap-2">
+                    <span className="text-3xl font-bold text-gray-900">
+                      {course.pricing.modulePriceEur} €
+                    </span>
+                    <span className="text-gray-600">на модул</span>
+                  </p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {course.pricing.moduleHours} учебни часа · цената е на ученик
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Месечен абонамент: {course.pricing.monthlyPriceEur} €/месец
+                  </p>
+                  <p className={`text-sm font-semibold ${theme.accentText} mt-2`}>
+                    Първият час е безплатен
+                  </p>
+                </div>
+
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Информация за курса</h3>
 
                 <div className="space-y-4">
@@ -173,22 +247,26 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-500">Продължителност:</span>
-                    <p className="text-gray-900">{course.durationHours} часа</p>
+                    <p className="text-gray-900">{course.durationHours} часа (4 модула)</p>
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium text-gray-500">Група:</span>
+                    <p className="text-gray-900">3–4 ученици</p>
                   </div>
                 </div>
 
                 <div className="mt-6 space-y-3">
                   <Link
-                    href="/pricing"
+                    href="/contact"
                     className={`w-full ${theme.accentBg} ${theme.accentBgHover} text-white px-6 py-3 rounded-lg transition-colors text-center block font-medium`}
                   >
-                    Ценообразуване
+                    Запишете безплатен пробен час
                   </Link>
                   <Link
-                    href="/contact"
+                    href="/pricing"
                     className={`w-full border ${theme.accentBorder} ${theme.accentText} px-6 py-3 rounded-lg ${theme.accentHoverLight} transition-colors text-center block font-medium`}
                   >
-                    Запиши се
+                    Виж всички цени и отстъпки
                   </Link>
                 </div>
               </div>
