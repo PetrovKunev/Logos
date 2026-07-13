@@ -31,10 +31,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: defaultTitle,
     description: defaultDescription,
-    images: [{ url: '/images/logo.png' }],
+    images: [{ url: '/images/og.jpg', width: 1200, height: 630, alt: defaultTitle }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
+    images: ['/images/og.jpg'],
   },
 }
 
