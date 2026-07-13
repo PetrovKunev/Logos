@@ -98,7 +98,7 @@ export default function ContactPage() {
               </a>
               <a
                 href={VIBER_HREF}
-                className="flex-1 bg-[#7360F2] hover:bg-[#5f4dd0] text-white px-5 py-3 rounded-lg font-semibold text-center transition-colors"
+                className="flex-1 bg-[#5f4dd0] hover:bg-[#4b3ab8] text-white px-5 py-3 rounded-lg font-semibold text-center transition-colors"
               >
                 Пишете във Viber
               </a>

@@ -245,7 +245,7 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
                           }`}
                         >
                           <p className="font-semibold">{step.label}</p>
-                          <p className="text-sm opacity-80">{step.grade}</p>
+                          <p className="text-sm">{step.grade}</p>
                         </div>
                       ))}
                     </div>
@@ -277,7 +277,7 @@ export default function CourseDetailsPage({ params }: { params: { slug: string }
                           }`}
                         >
                           <p className="font-semibold">{step.label}</p>
-                          <p className="text-sm opacity-80">{step.grade}</p>
+                          <p className="text-sm">{step.grade}</p>
                         </div>
                       ))}
                     </div>

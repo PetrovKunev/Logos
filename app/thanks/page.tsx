@@ -35,7 +35,7 @@ export default function ThanksPage() {
           </a>
           <a
             href={VIBER_HREF}
-            className="bg-[#7360F2] hover:bg-[#5f4dd0] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
+            className="bg-[#5f4dd0] hover:bg-[#4b3ab8] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
           >
             Пишете ни във Viber
           </a>

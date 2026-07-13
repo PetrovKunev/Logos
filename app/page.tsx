@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import CourseCard from '@/components/CourseCard'
+import ResultsSection from '@/components/ResultsSection'
 import courses from '@/data/courses.json'
 
 const categoryOrder = ['Програмиране', 'Математика', 'Български език и литература']
@@ -104,25 +105,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Practice vs Theory Highlight */}
-      <section className="py-12 bg-amber-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="text-3xl">🎯</span>
-              <h2 className="text-2xl md:text-3xl font-bold">
-                <span className="text-red-500">70% практика</span>
-                <span className="text-gray-700">, </span>
-                <span className="text-primary-600">30% теория</span>
-              </h2>
-            </div>
-            <p className="text-gray-600 text-lg">
-              Това е нашето съотношение за максимална ефективност на обучението
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -191,6 +173,66 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Как работим */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Как работим</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Прозрачен процес — от първия безплатен час до измерим резултат в края на всеки модул.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold mb-4">
+                1
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Безплатен пробен час</h3>
+              <p className="text-gray-600">
+                Детето сяда в реална група, а вие говорите с преподавателя. Решавате дали да
+                продължите чак след това.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold mb-4">
+                2
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Група от 3–4 ученици</h3>
+              <p className="text-gray-600">
+                Всяко дете работи активно на всеки час — при 3–4 ученици няма последен чин, на
+                който да се скриеш.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold mb-4">
+                3
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <span className="text-red-600">70% практика</span>,{' '}
+                <span className="text-primary-600">30% теория</span>
+              </h3>
+              <p className="text-gray-600">
+                Малко обяснения, много решаване. Ученикът напредва, когато сам решава задачи и
+                пише код — не когато слуша.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <div className="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold mb-4">
+                4
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Измерим прогрес всеки модул</h3>
+              <p className="text-gray-600">
+                Всеки модул завършва с тест — в 7. клас във формат НВО, а по програмиране с работещ
+                проект — и с честна обратна връзка към вас.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Резултати и отзиви — скрита, докато data/testimonials.json е празен */}
+      <ResultsSection />
 
       {/* CTA Section */}
       <section className="bg-primary-700 text-white py-16">
