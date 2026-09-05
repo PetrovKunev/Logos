@@ -76,3 +76,32 @@ html {
   @apply font-semibold text-gray-900;
 }
 
+
+.blog-content ol {
+  @apply list-decimal pl-6 mb-4 space-y-2;
+}
+
+.blog-content em {
+  @apply italic;
+}
+
+.blog-content code {
+  @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.blog-content table {
+  @apply w-full text-sm text-left border-collapse my-4;
+}
+
+.blog-content th,
+.blog-content td {
+  @apply border border-gray-200 px-3 py-2 text-gray-700;
+}
+
+.blog-content th {
+  @apply bg-gray-50 font-semibold text-gray-900;
+}
+
+.blog-content .table-wrap {
+  @apply overflow-x-auto my-4;
+}

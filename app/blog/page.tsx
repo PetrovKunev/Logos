@@ -8,7 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
-  const publishedPosts = blogposts.filter(post => post.isPublished)
+  const publishedPosts = blogposts
+    .filter((post) => post.isPublished)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 
   return (
     <div className="py-16">
