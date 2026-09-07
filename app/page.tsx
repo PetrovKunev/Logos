@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import CourseCard from '@/components/CourseCard'
 import ResultsSection from '@/components/ResultsSection'
 import courses from '@/data/courses.json'
+
+// Canonical: www версията е основната; без него Search Console докладва
+// началната страница като „Дубликат – потребителят не е избрал канонична страница“.
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 const categoryOrder = ['Програмиране', 'Математика', 'Български език и литература']
 

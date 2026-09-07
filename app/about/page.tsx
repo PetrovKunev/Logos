@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'За нас',
+  alternates: { canonical: '/about' },
   description:
     'Академия Логос — малки групи от 3–4 ученици, 70% практика и редовна обратна връзка към родителя. Нашата мисия и подход към образованието.',
 }

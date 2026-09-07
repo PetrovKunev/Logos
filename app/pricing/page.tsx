@@ -5,6 +5,7 @@ import { PHONE_DISPLAY, PHONE_HREF, VIBER_HREF } from '@/lib/contact'
 
 export const metadata: Metadata = {
   title: 'Цени — модулно обучение по математика, БЕЛ и програмиране',
+  alternates: { canonical: '/pricing' },
   description:
     'Ясни цени на модул: 350–400 € математика и БЕЛ, 360 € програмиране. Цената е на ученик, групи от 3–4 деца, безплатен пробен час, пробен изпит във формат НВО във всеки модул.',
 }

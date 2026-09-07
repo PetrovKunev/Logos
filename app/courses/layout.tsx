@@ -10,6 +10,8 @@ export const metadata: Metadata = {
     default: 'Курсове по математика, БЕЛ и програмиране за 5.–7. клас',
     template: `%s | ${SITE_NAME}`,
   },
+  // Покрива и старите /courses?category=... URL адреси от предишния сайт.
+  alternates: { canonical: '/courses' },
   description:
     'Целогодишни курсове в групи от 3–4 ученици: математика и БЕЛ с подготовка за НВО, програмиране Scratch → Python → C#. Записване модул по модул, безплатен пробен час.',
 }

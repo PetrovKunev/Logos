@@ -4,6 +4,7 @@ import { PHONE_TEL } from '@/lib/contact'
 
 export const metadata: Metadata = {
   title: 'Контакт — запишете безплатен пробен час',
+  alternates: { canonical: '/contact' },
   description:
     'Свържете се с Академия Логос по телефон, Viber или чрез формата за контакт. ж.к. Дружба 1, София. Работно време: пон–пет 09:00–19:00, събота 10:00–14:00.',
 }

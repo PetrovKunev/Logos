@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Блог — статии за НВО и образованието',
+  alternates: { canonical: '/blog' },
   description: 'Статии и съвети за образование, подготовка за НВО и развитие на умения.',
 }
 

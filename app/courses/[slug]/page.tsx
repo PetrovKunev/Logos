@@ -70,6 +70,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title,
     description,
+    alternates: { canonical: `/courses/${course.slug}` },
     openGraph: {
       title,
       description,

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Политика за поверителност',
+  alternates: { canonical: '/privacy' },
   description: 'Политика за поверителност на Академия Логос.',
 }
 
